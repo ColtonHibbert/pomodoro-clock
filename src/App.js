@@ -1,5 +1,7 @@
 import React from 'react';
 import 'tachyons';
+import BreakLength from './components/BreakLength.js';
+import SessionLength from './components/SessionLength.js';
 
 class App extends React.Component {
     constructor(props) {
@@ -15,11 +17,18 @@ class App extends React.Component {
               <div
                 className="flex justify-center"
               >
-                <div>break length</div>
-                <div>session length</div>
+                <BreakLength />
+                <SessionLength />
+              </div> 
+              <div className="flex flex-column ba">
+                <h2>session</h2>
+                <div>minutes:seconds</div>
               </div>
-              <div>session</div>
-              <div>buttons</div>
+              <div className="flex justify-center">
+                <div className="pa1">play</div>
+                <div className="pa1" >pause</div>
+                <div className="pa1">refresh</div>
+              </div>
             </div>
         );
     }
