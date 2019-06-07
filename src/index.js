@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './containers/App';
+import App from './containers/App.js';
 import * as serviceWorker from './serviceWorker';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
@@ -9,8 +9,8 @@ import { createLogger } from 'redux-logger';
 import { reducer } from './services/reducers.js';
 
 const logger = createLogger();
-const rootReducer = combineReducers({reducer});
-export const store = createStore(rootReducer, applyMiddleware(thunk, logger));
+//const rootReducer = combineReducers({reducer});
+export const store = createStore(reducer, applyMiddleware(thunk, logger));
 
 ReactDOM.render(
     <Provider store={store}>

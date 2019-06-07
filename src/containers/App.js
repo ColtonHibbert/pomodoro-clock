@@ -8,18 +8,23 @@ import { connect } from 'react-redux';
 import { store } from '../index.js';
 import {
     updateNum,
+    updateIncreasedBreakLength,
 } from '../services/actions.js';
-
 
 const mapStateToProps = (state) => {
     return {
         number: state.number,
+        breakLength: state.breakLength,
+        sessionLength: state.sessionLength,
+        sessionMinutes: state.sessionMinutes,
+        sessionSeconds: state.sessionSeconds,
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         updateNum: () => dispatch(updateNum()),
+        updateIncreasedBreakLength: () => dispatch(updateIncreasedBreakLength()),
     }
 }
 
@@ -27,6 +32,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
     }
+    
     render() {
         return(
             <div
@@ -34,10 +40,18 @@ class App extends React.Component {
             >
               <h1>Pomodoro Clock</h1>
               <div className="flex justify-center">
-                <BreakLength />
-                <SessionLength />
+                <BreakLength 
+                updateIncreasedBreakLength={this.props.updateIncreasedBreakLength}
+                breakLength={this.props.breakLength}
+                />
+                <SessionLength 
+                sessionLength={this.props.sessionLength}
+                />
               </div> 
-              <Session />
+              <Session 
+                sessionMinutes={this.props.sessionMinutes}
+                sessionSeconds={this.props.sessionSeconds}
+              />
               <Buttons updateNum={this.props.updateNum}/>
             </div>
         );

@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Session = (props) => {
+const Session = ({sessionMinutes, sessionSeconds}) => {
     return(
         <div className="flex flex-column ba">
             <h2>session</h2>
-            <div>minutes:seconds</div>
+            <div>{sessionMinutes}:{sessionSeconds}</div>
         </div>
     );
 }

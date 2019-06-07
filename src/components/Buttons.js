@@ -3,7 +3,7 @@ import React from 'react';
 const Buttons = (props) => {
     return(
         <div className="flex justify-center">
-            <div className="pa1"
+            <div className="pa1 pointer"
             onClick={props.updateNum}
             >play</div>
             <div className="pa1" >pause</div>
