@@ -7,8 +7,10 @@ const BreakLength = (props) => {
       >
         <div>break length</div>
         <div className="flex justify-center"> 
-          <div className="pa1">up</div>
-          <div className="pa1">number</div>
+          <div className="pa1"
+            onClick={props.updateIncreasedBreakLength}
+          >up</div>
+          <div className="pa1">{props.breakLength}</div>
           <div className="pa1">down</div>
         </div>
       </div>

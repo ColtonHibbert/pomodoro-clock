@@ -8,7 +8,7 @@ const SessionLength = (props) => {
             <div>session length</div>
             <div className="flex justify-center"> 
                 <div className="pa1">up</div>
-                <div className="pa1">number</div>
+                <div className="pa1">{props.sessionLength}</div>
                 <div className="pa1">down</div>
             </div>
         </div>  
