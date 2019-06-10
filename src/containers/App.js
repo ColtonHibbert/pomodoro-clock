@@ -9,6 +9,8 @@ import { store } from '../index.js';
 import {
     updateNum,
     updateIncreasedBreakLength,
+    updateDecreasedBreakLength,
+    updateIncreasedSessionLength,
 } from '../services/actions.js';
 
 const mapStateToProps = (state) => {
@@ -25,6 +27,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         updateNum: () => dispatch(updateNum()),
         updateIncreasedBreakLength: () => dispatch(updateIncreasedBreakLength()),
+        updateDecreasedBreakLength: () => dispatch(updateDecreasedBreakLength()),
+        updateIncreasedSessionLength: () => dispatch(updateIncreasedSessionLength()),
     }
 }
 
@@ -43,8 +47,10 @@ class App extends React.Component {
                 <BreakLength 
                 updateIncreasedBreakLength={this.props.updateIncreasedBreakLength}
                 breakLength={this.props.breakLength}
+                updateDecreasedBreakLength={this.props.updateDecreasedBreakLength}
                 />
                 <SessionLength 
+                updateIncreasedSessionLength={this.props.updateIncreasedSessionLength}
                 sessionLength={this.props.sessionLength}
                 />
               </div> 
