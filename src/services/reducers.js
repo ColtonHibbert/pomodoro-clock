@@ -3,6 +3,11 @@ import {
     UPDATE_NUM,
     INCREASE_BREAK_LENGTH_INDEX,
     INCREASE_BREAK_LENGTH,
+    DECREASE_BREAK_LENGTH_INDEX,
+    DECREASE_BREAK_LENGTH,
+    INCREASE_SESSION_LENGTH_INDEX,
+    INCREASE_SESSION_LENGTH,
+
 
 } from './constants.js';
 
@@ -29,6 +34,18 @@ export const reducer = ( state=initialState, action={} ) => {
     }
     if(action.type === INCREASE_BREAK_LENGTH) {
         return {...state, breakLength: action.breakLengthPayload }
+    }
+    if(action.type === DECREASE_BREAK_LENGTH_INDEX) {
+        return {...state, breakLengthIndex: action.breakLengthIndexPayload }
+    }
+    if(action.type === DECREASE_BREAK_LENGTH) {
+        return {...state, breakLength: action.breakLengthPayload }
+    }
+    if(action.type === INCREASE_SESSION_LENGTH_INDEX ) {
+        return { ...state, sessionLengthIndex: action.sessionLengthIndexPayload }
+    }
+    if(action.type === INCREASE_SESSION_LENGTH ) {
+        return { ...state, sessionLength: action.sessionLengthPayload }
     }
     if(action.type === DEFAULT ) {
         return {...state }
