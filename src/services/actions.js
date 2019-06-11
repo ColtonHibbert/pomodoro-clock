@@ -99,3 +99,35 @@ export const updateIncreasedSessionLength = () => {
         }
     }
 }
+
+export const decreaseSessionLengthIndex = () => {
+    return({
+        type: DECREASE_SESSION_LENGTH_INDEX,
+        sessionLengthIndexPayload: store.getState().sessionLengthIndex - 1,
+    });
+}
+
+export const decreaseSessionLength = () => {
+    return({
+        type: DECREASE_SESSION_LENGTH,
+        sessionLengthPayload: store.getState().normalArray[store.getState().sessionLengthIndex],
+    });
+}
+
+export const updateDecreasedSessionLength = () => {
+    return (dispatch) => {
+        if(store.getState().sessionLength > 1) {
+            dispatch(decreaseSessionLengthIndex());
+            dispatch(decreaseSessionLength());
+        }
+    }
+}
+
+// export const countDown = () => {
+//     return(dispatch) => {
+//         if(play) {
+//             for(let i = 1; store.getState().counter )
+//         }
+//     }
+// }
+

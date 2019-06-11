@@ -12,7 +12,10 @@ const SessionLength = (props) => {
                     onClick={props.updateIncreasedSessionLength}
                 >up</div>
                 <div className="pa1">{props.sessionLength}</div>
-                <div className="pa1">down</div>
+                <div 
+                    className="pa1"
+                    onClick={props.updateDecreasedSessionLength}
+                >down</div>
             </div>
         </div>  
      );
