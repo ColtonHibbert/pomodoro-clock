@@ -7,7 +7,8 @@ import {
     DECREASE_BREAK_LENGTH,
     INCREASE_SESSION_LENGTH_INDEX,
     INCREASE_SESSION_LENGTH,
-
+    DECREASE_SESSION_LENGTH_INDEX,
+    DECREASE_SESSION_LENGTH,
 
 } from './constants.js';
 
@@ -23,6 +24,7 @@ const initialState = {
     sessionLengthIndex: 24,
     sessionMinutes: 25,
     sessionSeconds: "00",
+    play: true,
 }
 
 export const reducer = ( state=initialState, action={} ) => {
@@ -46,6 +48,12 @@ export const reducer = ( state=initialState, action={} ) => {
     }
     if(action.type === INCREASE_SESSION_LENGTH ) {
         return { ...state, sessionLength: action.sessionLengthPayload }
+    }
+    if(action.type === DECREASE_SESSION_LENGTH_INDEX) {
+        return {...state, sessionLengthIndex: action.sessionLengthIndexPayload }
+    }
+    if(action.type === DECREASE_SESSION_LENGTH) {
+        return {...state, sessionLength: action.sessionLengthPayload }
     }
     if(action.type === DEFAULT ) {
         return {...state }

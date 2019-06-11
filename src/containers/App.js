@@ -11,6 +11,7 @@ import {
     updateIncreasedBreakLength,
     updateDecreasedBreakLength,
     updateIncreasedSessionLength,
+    updateDecreasedSessionLength,
 } from '../services/actions.js';
 
 const mapStateToProps = (state) => {
@@ -29,6 +30,7 @@ const mapDispatchToProps = (dispatch) => {
         updateIncreasedBreakLength: () => dispatch(updateIncreasedBreakLength()),
         updateDecreasedBreakLength: () => dispatch(updateDecreasedBreakLength()),
         updateIncreasedSessionLength: () => dispatch(updateIncreasedSessionLength()),
+        updateDecreasedSessionLength: () => dispatch(updateDecreasedSessionLength()),
     }
 }
 
@@ -36,6 +38,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
     }
+    
     
     render() {
         return(
@@ -52,6 +55,7 @@ class App extends React.Component {
                 <SessionLength 
                 updateIncreasedSessionLength={this.props.updateIncreasedSessionLength}
                 sessionLength={this.props.sessionLength}
+                updateDecreasedSessionLength={this.props.updateDecreasedSessionLength}
                 />
               </div> 
               <Session 
