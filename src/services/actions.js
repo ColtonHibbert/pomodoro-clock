@@ -9,6 +9,8 @@ import {
     INCREASE_SESSION_LENGTH,
     DECREASE_SESSION_LENGTH_INDEX,
     DECREASE_SESSION_LENGTH,
+    UPDATE_MINUTES,
+    UPDATE_SECONDS,
 } from './constants.js';
 import { store } from '../index.js';
 
@@ -123,11 +125,34 @@ export const updateDecreasedSessionLength = () => {
     }
 }
 
-// export const countDown = () => {
-//     return(dispatch) => {
-//         if(play) {
-//             for(let i = 1; store.getState().counter )
-//         }
-//     }
-// }
+export const updateMinutes = (value) => {
+    return({
+        type: UPDATE_MINUTES,
+        updateMinutesPayload: value,
+    });
+}
+
+export const updateSeconds = (value) => {
+    return({
+        type: UPDATE_SECONDS,
+        updateSecondsPayload: value,
+    });
+}
+
+function runTiming(dispatch) {
+    console.log("hi")
+    const sessionLengthIndexValue = store.getState().sessionLengthIndex
+            for(let i = sessionLengthIndexValue; sessionLengthIndexValue > 1; i--) {
+                const sessionMinutesValue = store.getState().timingArray[sessionLengthIndexValue + 1];
+                dispatch(updateMinutes(sessionMinutesValue));
+            }
+}
+
+export const countDown = () => {
+    return(dispatch) => {
+        if(store.getState().play) {
+        setInterval(runTiming(dispatch),1000)
+        }
+    }
+}
 

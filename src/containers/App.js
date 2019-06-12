@@ -12,6 +12,7 @@ import {
     updateDecreasedBreakLength,
     updateIncreasedSessionLength,
     updateDecreasedSessionLength,
+    countDown,
 } from '../services/actions.js';
 
 const mapStateToProps = (state) => {
@@ -31,6 +32,7 @@ const mapDispatchToProps = (dispatch) => {
         updateDecreasedBreakLength: () => dispatch(updateDecreasedBreakLength()),
         updateIncreasedSessionLength: () => dispatch(updateIncreasedSessionLength()),
         updateDecreasedSessionLength: () => dispatch(updateDecreasedSessionLength()),
+        countDown: () => dispatch(countDown()),
     }
 }
 
@@ -62,7 +64,10 @@ class App extends React.Component {
                 sessionMinutes={this.props.sessionMinutes}
                 sessionSeconds={this.props.sessionSeconds}
               />
-              <Buttons updateNum={this.props.updateNum}/>
+              <Buttons 
+                updateNum={this.props.updateNum}
+                countDown={this.props.countDown}
+              />
             </div>
         );
     }

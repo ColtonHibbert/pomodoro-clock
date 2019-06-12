@@ -4,8 +4,9 @@ const Buttons = (props) => {
     return(
         <div className="flex justify-center">
             <div className="pa1 pointer"
-            onClick={props.updateNum}
-            >play</div>
+                onClick={props.countDown}
+            >play
+            </div>
             <div className="pa1" >pause</div>
             <div className="pa1">refresh</div>
         </div>

@@ -9,6 +9,8 @@ import {
     INCREASE_SESSION_LENGTH,
     DECREASE_SESSION_LENGTH_INDEX,
     DECREASE_SESSION_LENGTH,
+    UPDATE_MINUTES,
+    UPDATE_SECONDS,
 
 } from './constants.js';
 
@@ -54,6 +56,12 @@ export const reducer = ( state=initialState, action={} ) => {
     }
     if(action.type === DECREASE_SESSION_LENGTH) {
         return {...state, sessionLength: action.sessionLengthPayload }
+    }
+    if(action.type === UPDATE_MINUTES) {
+        return {...state, sessionMinutes: action.updateMinutesPayload }
+    }
+    if(action.type === UPDATE_SECONDS) {
+        return {...state, sessionSeconds: action.updateSecondsPayload }
     }
     if(action.type === DEFAULT ) {
         return {...state }
