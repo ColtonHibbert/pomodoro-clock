@@ -142,17 +142,26 @@ export const updateSeconds = (value) => {
 function runTiming(dispatch) {
     console.log("hi")
     const sessionLengthIndexValue = store.getState().sessionLengthIndex
-            for(let i = sessionLengthIndexValue; sessionLengthIndexValue > 1; i--) {
-                const sessionMinutesValue = store.getState().timingArray[sessionLengthIndexValue + 1];
-                dispatch(updateMinutes(sessionMinutesValue));
-            }
+    for(let i = sessionLengthIndexValue; i > 1; i--) {
+        const sessionMinutesValue = store.getState().timingArray[i + 1];
+        dispatch(updateMinutes(sessionMinutesValue));
+        const sessionSecondsIndexValue = store.getState().timingArrayIndex;
+        for(let j = sessionSecondsIndexValue; j > 1; j-- ) {
+            const countDownSeconds = (dispatch) => {
+                const sessionSecondsValue = store.getState().timingArray[j];
+                dispatch(updateSeconds(sessionSecondsValue));
+            };
+            setInterval(countDownSeconds(dispatch), 1000);
+        }
+    }
 }
 
 export const countDown = () => {
     return(dispatch) => {
-        if(store.getState().play) {
-        setInterval(runTiming(dispatch),1000)
-        }
+        // if(store.getState().play) {
+        //     runTiming(dispatch);
+        // }
+        runTiming(dispatch);
     }
 }
 
