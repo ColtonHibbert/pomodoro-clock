@@ -141,21 +141,26 @@ export const updateSeconds = (value) => {
 
 function runTiming(dispatch) {
     console.log("hi")
-    const sessionLengthIndexValue = store.getState().sessionLengthIndex
-    for(let i = sessionLengthIndexValue; i > 1; i--) {
-        const sessionMinutesValue = store.getState().timingArray[i + 1];
-        dispatch(updateMinutes(sessionMinutesValue));
-        const sessionSecondsIndexValue = store.getState().timingArrayIndex;
-        for(let j = sessionSecondsIndexValue; j > 1; j-- ) {
-            const countDownSeconds = (dispatch) => {
-                const sessionSecondsValue = store.getState().timingArray[j];
-                dispatch(updateSeconds(sessionSecondsValue));
-            };
-            setInterval(countDownSeconds(dispatch), 1000);
-        }
+        const sessionLengthIndexValue = store.getState().sessionLengthIndex
+        for(let i = sessionLengthIndexValue; i > 1; i--) {
+            setTimeout( (() => { 
+            const sessionMinutesValue = store.getState().timingArray[i + 1];
+            dispatch(updateMinutes(sessionMinutesValue));
+        }),1000)
     }
 }
-
+//use set interval, don't use for loops
+//const sessionSecondsIndexValue = store.getState().timingArrayIndex;
+        // setTimeout(function() {
+        //     for(let j = sessionSecondsIndexValue; j > 1; j-- ) {
+        //             const countDownSeconds = ((dispatch) => {
+        //             const sessionSecondsValue = store.getState().timingArray[j];
+        //             dispatch(updateSeconds(sessionSecondsValue));
+        //             });
+        //             countDownSeconds(dispatch);
+        //         console.log('hi')
+        //     }
+        // }, 1000);
 export const countDown = () => {
     return(dispatch) => {
         // if(store.getState().play) {
