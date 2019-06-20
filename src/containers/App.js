@@ -13,6 +13,7 @@ import {
     updateIncreasedSessionLength,
     updateDecreasedSessionLength,
     countDown,
+    togglePlay,
 } from '../services/actions.js';
 
 const mapStateToProps = (state) => {
@@ -20,8 +21,8 @@ const mapStateToProps = (state) => {
         number: state.number,
         breakLength: state.breakLength,
         sessionLength: state.sessionLength,
-        sessionMinutes: state.sessionMinutes,
-        sessionSeconds: state.sessionSeconds,
+        minutes: state.minutes,
+        seconds: state.seconds,
     }
 }
 
@@ -32,7 +33,12 @@ const mapDispatchToProps = (dispatch) => {
         updateDecreasedBreakLength: () => dispatch(updateDecreasedBreakLength()),
         updateIncreasedSessionLength: () => dispatch(updateIncreasedSessionLength()),
         updateDecreasedSessionLength: () => dispatch(updateDecreasedSessionLength()),
-        countDown: () => dispatch(countDown()),
+        //countDown: () => dispatch(countDown()),
+        //togglePlay: () => dispatch(togglePlay()),
+        play: () => {
+            dispatch(togglePlay());
+            dispatch(countDown());
+        }
     }
 }
 
@@ -40,7 +46,6 @@ class App extends React.Component {
     constructor(props) {
         super(props);
     }
-    
     
     render() {
         return(
@@ -61,12 +66,12 @@ class App extends React.Component {
                 />
               </div> 
               <Session 
-                sessionMinutes={this.props.sessionMinutes}
-                sessionSeconds={this.props.sessionSeconds}
+                minutes={this.props.minutes}
+                seconds={this.props.seconds}
               />
               <Buttons 
                 updateNum={this.props.updateNum}
-                countDown={this.props.countDown}
+                play={this.props.play}
               />
             </div>
         );
