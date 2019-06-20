@@ -11,6 +11,15 @@ import {
     DECREASE_SESSION_LENGTH,
     UPDATE_MINUTES,
     UPDATE_SECONDS,
+    TOGGLE_PLAY,
+    DECREASE_SESSION_MINUTES_ARRAY_INDEX,
+    DECREASE_SESSION_SECONDS_ARRAY_INDEX,
+    DECREASE_BREAK_MINUTES_ARRAY_INDEX,
+    DECREASE_BREAK_SECONDS_ARRAY_INDEX,
+    UPDATE_SESSION_MINUTES_ARRAY_INDEX,
+    UPDATE_SESSION_SECONDS_ARRAY_INDEX,
+    UPDATE_BREAK_MINUTES_ARRAY_INDEX,
+    UPDATE_BREAK_SECONDS_ARRAY_INDEX,
 
 } from './constants.js';
 
@@ -27,11 +36,15 @@ const initialState = {
     breakMinutesArrayIndex: 4,
     breakSecondsArrayIndex: 59,
     breakLength: "5",
+    breakLengthIndex: 4,
     sessionLength: "25",
-    sessionMinutes: "00",
-    sessionSeconds: "05",
-    play: true,
+    sessionLengthIndex: 24,
+    minutes: "00",
+    seconds: "05",
+    play: false,
 }
+// minutesArrayindex
+// secondsArrayindex 
 
 export const reducer = ( state=initialState, action={} ) => {
     if(action.type === UPDATE_NUM) {
@@ -62,10 +75,37 @@ export const reducer = ( state=initialState, action={} ) => {
         return {...state, sessionLength: action.sessionLengthPayload }
     }
     if(action.type === UPDATE_MINUTES) {
-        return {...state, sessionMinutes: action.updateMinutesPayload }
+        return {...state, minutes: action.updateMinutesPayload }
     }
     if(action.type === UPDATE_SECONDS) {
-        return {...state, sessionSeconds: action.updateSecondsPayload }
+        return {...state, seconds: action.updateSecondsPayload }
+    }
+    if(action.type === TOGGLE_PLAY) {
+        return {...state, play: action.playPayload}
+    }
+    if(action.type === DECREASE_SESSION_MINUTES_ARRAY_INDEX ) {
+        return {...state, sessionMinutesArrayIndex: action.sessionMinutesArrayIndexPayload }
+    }
+    if(action.type === DECREASE_SESSION_SECONDS_ARRAY_INDEX ) {
+        return {...state, sessionSecondsArrayIndex: action.sessionSecondsArrayIndexPayload }
+    }
+    if(action.type === DECREASE_BREAK_MINUTES_ARRAY_INDEX) {
+        return {...state, breakMinutesArrayIndex: action.breakMinutesArrayIndexPayload }
+    }
+    if(action.type === DECREASE_BREAK_SECONDS_ARRAY_INDEX ) {
+        return {...state, breakSecondsArrayIndex: action.breakSecondsArrayIndexPayload }
+    }
+    if(action.type === UPDATE_SESSION_MINUTES_ARRAY_INDEX) {
+        return {...state, sessionMinutesArrayIndex: action.sessionMinutesArrayIndexPayload }
+    }
+    if(action.type === UPDATE_SESSION_SECONDS_ARRAY_INDEX) {
+        return {...state, sessionSecondsArrayIndex: action.sessionSecondsArrayIndexPayload }
+    }
+    if(action.type === UPDATE_BREAK_MINUTES_ARRAY_INDEX) {
+        return {...state, breakMinutesArrayIndex: action.breakMinutesArrayIndexPayload }
+    }
+    if(action.type === UPDATE_BREAK_SECONDS_ARRAY_INDEX ) {
+        return {...state, breakSecondsArrayIndex: action.breakSecondsArrayIndexPayload }
     }
     if(action.type === DEFAULT ) {
         return {...state }
