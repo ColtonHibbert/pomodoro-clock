@@ -140,27 +140,32 @@ export const updateSeconds = (value) => {
 }
 
 function runTiming(dispatch) {
-    console.log("hi")
-        const sessionLengthIndexValue = store.getState().sessionLengthIndex
-        for(let i = sessionLengthIndexValue; i > 1; i--) {
-            setTimeout( (() => { 
-            const sessionMinutesValue = store.getState().timingArray[i + 1];
-            dispatch(updateMinutes(sessionMinutesValue));
-        }),1000)
+    let sessionMinutesIndexValue = store.getState().sessionMinutesArrayIndex;
+    let sessionSecondsIndexValue = store.getState().sessionSecondsArrayIndex;
+    let interval = window.setInterval(countingDown, 1000);
+    function countingDown() {
+        if(store.getState().play) {
+            let sessionMinutesVal = store.getState().minutesArray[sessionMinutesIndexValue];
+            if(sessionMinutesIndexValue === 0 && sessionSecondsIndexValue === 0) {
+                sessionMinutesIndexValue = 4;
+                sessionSecondsIndexValue = 60;
+            }
+            if (sessionSecondsIndexValue === 0) {
+                sessionSecondsIndexValue = 60;
+            }
+            if (sessionSecondsIndexValue === 59) {
+                sessionMinutesIndexValue = sessionMinutesIndexValue - 1;
+                dispatch(updateMinutes(sessionMinutesVal));
+            }
+            sessionSecondsIndexValue = sessionSecondsIndexValue - 1
+            let sessionSecondsVal = store.getState().secondsArray[sessionSecondsIndexValue];
+            dispatch(updateSeconds(sessionSecondsVal));
+        } else {
+            clearInterval(interval);
+        }
     }
 }
-//use set interval, don't use for loops
-//const sessionSecondsIndexValue = store.getState().timingArrayIndex;
-        // setTimeout(function() {
-        //     for(let j = sessionSecondsIndexValue; j > 1; j-- ) {
-        //             const countDownSeconds = ((dispatch) => {
-        //             const sessionSecondsValue = store.getState().timingArray[j];
-        //             dispatch(updateSeconds(sessionSecondsValue));
-        //             });
-        //             countDownSeconds(dispatch);
-        //         console.log('hi')
-        //     }
-        // }, 1000);
+
 export const countDown = () => {
     return(dispatch) => {
         // if(store.getState().play) {
