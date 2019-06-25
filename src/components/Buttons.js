@@ -3,12 +3,17 @@ import React from 'react';
 const Buttons = (props) => {
     return(
         <div className="flex justify-center">
-            <div className="pa1 pointer"
+            <div 
+                id="start_stop"
+                className="pa1 pointer"
                 onClick={props.play}
-            >play
+            >play/pause
             </div>
-            <div className="pa1" >pause</div>
-            <div className="pa1">refresh</div>
+            <div 
+                id="reset"
+                className="pa1"
+                onClick={props.refresh}
+            >refresh</div>
         </div>
     );
 }

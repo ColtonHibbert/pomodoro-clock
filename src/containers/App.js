@@ -14,6 +14,7 @@ import {
     updateDecreasedSessionLength,
     countDown,
     togglePlay,
+    refresh,
 } from '../services/actions.js';
 
 const mapStateToProps = (state) => {
@@ -38,7 +39,8 @@ const mapDispatchToProps = (dispatch) => {
         play: () => {
             dispatch(togglePlay());
             dispatch(countDown());
-        }
+        },
+        refresh: () => dispatch(refresh())
     }
 }
 
@@ -72,6 +74,7 @@ class App extends React.Component {
               <Buttons 
                 updateNum={this.props.updateNum}
                 play={this.props.play}
+                refresh={this.props.refresh}
               />
             </div>
         );
