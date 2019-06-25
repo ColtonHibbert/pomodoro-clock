@@ -20,8 +20,11 @@ import {
     UPDATE_SESSION_SECONDS_ARRAY_INDEX,
     UPDATE_BREAK_MINUTES_ARRAY_INDEX,
     UPDATE_BREAK_SECONDS_ARRAY_INDEX,
+    ALTERNATE_SESSION_AND_BREAK,
+    REFRESH,
 
 } from './constants.js';
+import { alternateSessionAndBreak } from './actions.js';
 
 const initialState = {
     number: 0,
@@ -31,20 +34,17 @@ const initialState = {
     31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,'00'],
     minutesArray: ['00','01','02','03','04','05','06','07','08','09',10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,
     31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59],
-    sessionMinutesArrayIndex: 0,
-    sessionSecondsArrayIndex: 4,
-    breakMinutesArrayIndex: 4,
-    breakSecondsArrayIndex: 59,
+    sessionMinutesArrayIndex: 25,
+    sessionSecondsArrayIndex: 59,
     breakLength: "5",
-    breakLengthIndex: 4,
+    breakLengthIndex: 24,
     sessionLength: "25",
     sessionLengthIndex: 24,
-    minutes: "00",
-    seconds: "05",
+    minutes: "25",
+    seconds: "00",
     play: false,
+    session: true,
 }
-// minutesArrayindex
-// secondsArrayindex 
 
 export const reducer = ( state=initialState, action={} ) => {
     if(action.type === UPDATE_NUM) {
@@ -106,6 +106,23 @@ export const reducer = ( state=initialState, action={} ) => {
     }
     if(action.type === UPDATE_BREAK_SECONDS_ARRAY_INDEX ) {
         return {...state, breakSecondsArrayIndex: action.breakSecondsArrayIndexPayload }
+    }
+    if(action.type === ALTERNATE_SESSION_AND_BREAK ) {
+        return {...state, session: action.alternateSessionAndBreakPayload }
+    }
+    if(action.type === REFRESH) {
+        return {...state,
+            sessionMinutesArrayIndex: action.sessionMinutesArrayIndexPayload,
+            sessionSecondsArrayIndex: action.sessionSecondsArrayIndexPayload,
+            breakLength: action.breakLengthPayload,
+            breakLengthIndexPayload: action.breakLengthIndexPayload,
+            sessionLength: action.sessionLengthPayload,
+            sessionLengthIndex: action.sessionLengthIndexPayload,
+            minutes: action.minutesPayload,
+            seconds: action.secondsPayload,
+            play: action.playPayload,
+            session: action.sessionPayload,
+        }
     }
     if(action.type === DEFAULT ) {
         return {...state }

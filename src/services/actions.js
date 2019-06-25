@@ -20,6 +20,8 @@ import {
     UPDATE_SESSION_SECONDS_ARRAY_INDEX,
     UPDATE_BREAK_MINUTES_ARRAY_INDEX,
     UPDATE_BREAK_SECONDS_ARRAY_INDEX,
+    ALTERNATE_SESSION_AND_BREAK,
+    REFRESH,
 } from './constants.js';
 import { store } from '../index.js';
 
@@ -52,9 +54,22 @@ export const increaseBreakLength = () => {
 
 export const updateIncreasedBreakLength = () => {
     return (dispatch) => {
-        if(store.getState().breakLength < 60) {
-        dispatch(increaseBreakLengthIndex());
-        dispatch(increaseBreakLength());
+        if(store.getState().breakLength < 60 && store.getState().play === false) {
+            dispatch(increaseBreakLengthIndex());
+            dispatch(increaseBreakLength());
+            if(store.getState().session === false) {
+                if(store.getState().sessionSecondsArrayIndex < 59) {
+                    dispatch(updateSessionMinutesArrayIndex(store.getState().sessionMinutesArrayIndex + 2));
+                }
+                if(store.getState().sessionSecondsArrayIndex === 59) {
+                    dispatch(updateSessionMinutesArrayIndex(store.getState().sessionMinutesArrayIndex + 1));
+                }
+                dispatch(updateSessionSecondsArrayIndex(59))
+            }
+            if(store.getState().session === false ) {
+                dispatch(updateMinutes(store.getState().minutesArray[store.getState().breakLengthIndex + 1]))
+                dispatch(updateSeconds(store.getState().secondsArray[59]))
+            }
         }
     }
 }
@@ -75,9 +90,19 @@ export const decreaseBreakLength = () => {
 
 export const updateDecreasedBreakLength = () => {
     return (dispatch) => {
-        if(store.getState().breakLength > 1) {
+        if(store.getState().breakLength > 1 && store.getState().play === false) {
             dispatch(decreaseBreakLengthIndex());
             dispatch(decreaseBreakLength());
+            if(store.getState().session === false) {
+                if(store.getState().sessionSecondsArrayIndex === 59) {
+                    dispatch(updateSessionMinutesArrayIndex(store.getState().sessionMinutesArrayIndex - 1));
+                }
+                dispatch(updateSessionSecondsArrayIndex(59))
+            }
+            if(store.getState().session === false ) {
+                dispatch(updateMinutes(store.getState().minutesArray[store.getState().breakLengthIndex + 1]))
+                dispatch(updateSeconds(store.getState().secondsArray[59]))
+            }
         }
     }
 }
@@ -104,9 +129,22 @@ export const increaseSessionLength = () => {
 
 export const updateIncreasedSessionLength = () => {
     return (dispatch) => {
-        if(store.getState().sessionLength < 60) {
-        dispatch(increaseSessionLengthIndex());
-        dispatch(increaseSessionLength());
+        if(store.getState().sessionLength < 60 && store.getState().play === false) {
+            dispatch(increaseSessionLengthIndex());
+            dispatch(increaseSessionLength());
+            if(store.getState().session) {
+                if(store.getState().sessionSecondsArrayIndex < 59) {
+                    dispatch(updateSessionMinutesArrayIndex(store.getState().sessionMinutesArrayIndex + 2));
+                }
+                if(store.getState().sessionSecondsArrayIndex === 59) {
+                    dispatch(updateSessionMinutesArrayIndex(store.getState().sessionMinutesArrayIndex + 1));
+                }
+                dispatch(updateSessionSecondsArrayIndex(59))
+            }
+            if(store.getState().session) {
+                dispatch(updateMinutes(store.getState().minutesArray[store.getState().sessionMinutesArrayIndex]))
+                dispatch(updateSeconds(store.getState().secondsArray[store.getState().sessionSecondsArrayIndex]))
+            }
         }
     }
 }
@@ -127,9 +165,19 @@ export const decreaseSessionLength = () => {
 
 export const updateDecreasedSessionLength = () => {
     return (dispatch) => {
-        if(store.getState().sessionLength > 1) {
+        if(store.getState().sessionLength > 1 && store.getState().play === false) {
             dispatch(decreaseSessionLengthIndex());
             dispatch(decreaseSessionLength());
+            if(store.getState().session) {
+                if(store.getState().sessionSecondsArrayIndex === 59) {
+                    dispatch(updateSessionMinutesArrayIndex(store.getState().sessionMinutesArrayIndex - 1));
+                }
+                dispatch(updateSessionSecondsArrayIndex(59))
+            }
+            if(store.getState().session) {
+                dispatch(updateMinutes(store.getState().minutesArray[store.getState().sessionMinutesArrayIndex]))
+                dispatch(updateSeconds(store.getState().secondsArray[store.getState().sessionSecondsArrayIndex]))
+            }
         }
     }
 }
@@ -151,53 +199,33 @@ export const updateSeconds = (value) => {
 function runTiming(dispatch) {
     let interval = window.setInterval(countingDown, 1000);
     function countingDown() {
-        let minutesVal = store.getState().minutesArray[store.getState().sessionMinutesArrayIndex];
         if(store.getState().play) {
             if(store.getState().sessionMinutesArrayIndex === 0 && store.getState().sessionSecondsArrayIndex === 0) {
-                dispatch(updateSessionMinutesArrayIndex(4))
-                dispatch(updateSessionSecondsArrayIndex(60))
+                dispatch(alternateSessionAndBreak())
+                if(store.getState().session === false) {
+                    dispatch(updateSessionMinutesArrayIndex(store.getState().breakLengthIndex + 1))
+                    dispatch(updateSessionSecondsArrayIndex(60))
+                }
+                else {
+                    dispatch(updateSessionMinutesArrayIndex(store.getState().sessionLengthIndex + 1))
+                    dispatch(updateSessionSecondsArrayIndex(60))
+                }
             }
             if (store.getState().sessionSecondsArrayIndex === 0) {
                 dispatch(updateSessionSecondsArrayIndex(60))
             }
             if (store.getState().sessionSecondsArrayIndex === 59) {
                 dispatch(decreaseSessionMinutesArrayIndex())
-                dispatch(updateMinutes(minutesVal));
+                dispatch(updateMinutes(store.getState().minutesArray[store.getState().sessionMinutesArrayIndex]));
             }
             dispatch(decreaseSessionSecondsArrayIndex());
-            let secondsVal = store.getState().secondsArray[store.getState().sessionSecondsArrayIndex];
             dispatch(updateSeconds(store.getState().secondsArray[store.getState().sessionSecondsArrayIndex]));
-        } else {
+            
+        } else if(store.getState().play === false) {
             clearInterval(interval);
         }
     }
 }
-// function runTiming(dispatch) {
-//     let sessionMinutesIndexValue = store.getState().sessionMinutesArrayIndex;
-//     let sessionSecondsIndexValue = store.getState().sessionSecondsArrayIndex;
-//     let interval = window.setInterval(countingDown, 1000);
-//     function countingDown() {
-//         if(store.getState().play) {
-//             let sessionMinutesVal = store.getState().minutesArray[sessionMinutesIndexValue];
-//             if(sessionMinutesIndexValue === 0 && sessionSecondsIndexValue === 0) {
-//                 sessionMinutesIndexValue = 4;
-//                 sessionSecondsIndexValue = 60;
-//             }
-//             if (sessionSecondsIndexValue === 0) {
-//                 sessionSecondsIndexValue = 60;
-//             }
-//             if (sessionSecondsIndexValue === 59) {
-//                 sessionMinutesIndexValue = sessionMinutesIndexValue - 1;
-//                 dispatch(updateMinutes(sessionMinutesVal));
-//             }
-//             sessionSecondsIndexValue = sessionSecondsIndexValue - 1
-//             let sessionSecondsVal = store.getState().secondsArray[sessionSecondsIndexValue];
-//             dispatch(updateSeconds(sessionSecondsVal));
-//         } else {
-//             clearInterval(interval);
-//         }
-//     }
-// }
 
 export const countDown = () => {
     return(dispatch) => {
@@ -265,5 +293,28 @@ export const updateBreakSecondsArrayIndex = (value) => {
     return {
         type: UPDATE_BREAK_SECONDS_ARRAY_INDEX,
         breakSecondsArrayIndexPayload: value,
+    }
+}
+
+export const alternateSessionAndBreak = () => {
+    return {
+        type: ALTERNATE_SESSION_AND_BREAK,
+        alternateSessionAndBreakPayload: !store.getState().session,
+    }
+}
+
+export const refresh = () => {
+    return {
+        type: REFRESH,
+        sessionMinutesArrayIndexPayload: 25,
+        sessionSecondsArrayIndexPayload: 59,
+        breakLengthPayload: "5",
+        breakLengthIndexPayload: 4,
+        sessionLengthPayload: "25",
+        sessionLengthIndexPayload: 24,
+        minutesPayload: "25",
+        secondsPayload: "00",
+        playPayload: false,
+        sessionPayload: true,
     }
 }
