@@ -1,5 +1,6 @@
 import React from 'react';
 import { store } from '../index.js';
+import Pacman from '../services/Pacman.mp3';
 
 const Session = ({minutes, seconds}) => {
     return(
@@ -13,6 +14,12 @@ const Session = ({minutes, seconds}) => {
                 <h2>Break</h2>
             }
             <div id="time-left">{minutes}:{seconds}</div>
+            <audio
+                id="beep"
+                src={Pacman}
+                type="audio/mp3"
+            >Your browser does not support this audio format.
+            </audio>
         </div>
     );
 }

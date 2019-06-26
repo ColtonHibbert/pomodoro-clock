@@ -201,21 +201,37 @@ function runTiming(dispatch) {
     function countingDown() {
         if(store.getState().play) {
             if(store.getState().sessionMinutesArrayIndex === 0 && store.getState().sessionSecondsArrayIndex === 0) {
-                if(store.getState().session === false) {
+                const playBeeper = (() => {
+                    console.log("should play")
+                    document.getElementById('beep').play()
+                })
+                playBeeper();
+                if(store.getState().session) {
                     dispatch(updateSessionMinutesArrayIndex(store.getState().breakLengthIndex + 1))
                     dispatch(updateSessionSecondsArrayIndex(60))
+                    dispatch(decreaseSessionSecondsArrayIndex());
+                    dispatch(updateSeconds(store.getState().secondsArray[store.getState().sessionSecondsArrayIndex]));
                     dispatch(alternateSessionAndBreak())
+                    dispatch(updateSessionSecondsArrayIndex(60))
+                    return
                 }
                 else {
                     dispatch(updateSessionMinutesArrayIndex(store.getState().sessionLengthIndex + 1))
                     dispatch(updateSessionSecondsArrayIndex(60))
+                    dispatch(decreaseSessionSecondsArrayIndex());
+                    dispatch(updateSeconds(store.getState().secondsArray[store.getState().sessionSecondsArrayIndex]));
                     dispatch(alternateSessionAndBreak())
+                    dispatch(updateSessionSecondsArrayIndex(60))
+                    return
                  }
+            }
+            if(store.getState().sessionSecondsArrayIndex === 60) {
+                dispatch(updateMinutes(store.getState().minutesArray[store.getState().sessionMinutesArrayIndex]));
             }
             if (store.getState().sessionSecondsArrayIndex === 0) {
                 dispatch(updateSessionSecondsArrayIndex(60))
             }
-            if (store.getState().sessionSecondsArrayIndex === 59) {
+            if (store.getState().sessionSecondsArrayIndex === 59 ) {
                 dispatch(decreaseSessionMinutesArrayIndex())
                 dispatch(updateMinutes(store.getState().minutesArray[store.getState().sessionMinutesArrayIndex]));
             }
@@ -305,6 +321,9 @@ export const alternateSessionAndBreak = () => {
 }
 
 export const refresh = () => {
+    const beeper = document.getElementById('beep');
+    beeper.pause();
+    beeper.currentTime = 0;
     return {
         type: REFRESH,
         sessionMinutesArrayIndexPayload: 25,
