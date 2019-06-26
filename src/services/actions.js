@@ -202,7 +202,6 @@ function runTiming(dispatch) {
         if(store.getState().play) {
             if(store.getState().sessionMinutesArrayIndex === 0 && store.getState().sessionSecondsArrayIndex === 0) {
                 const playBeeper = (() => {
-                    console.log("should play")
                     document.getElementById('beep').play()
                 })
                 playBeeper();
