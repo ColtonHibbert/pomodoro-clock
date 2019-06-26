@@ -201,6 +201,11 @@ function runTiming(dispatch) {
     function countingDown() {
         if(store.getState().play) {
             if(store.getState().sessionMinutesArrayIndex === 0 && store.getState().sessionSecondsArrayIndex === 0) {
+                const playBeeper = (() => {
+                    console.log("should play")
+                    document.getElementById('beep').play()
+                })
+                playBeeper();
                 if(store.getState().session) {
                     dispatch(updateSessionMinutesArrayIndex(store.getState().breakLengthIndex + 1))
                     dispatch(updateSessionSecondsArrayIndex(60))
@@ -316,6 +321,9 @@ export const alternateSessionAndBreak = () => {
 }
 
 export const refresh = () => {
+    const beeper = document.getElementById('beep');
+    beeper.pause();
+    beeper.currentTime = 0;
     return {
         type: REFRESH,
         sessionMinutesArrayIndexPayload: 25,
