@@ -4,7 +4,7 @@ import Pacman from '../services/Pacman.mp3';
 
 const Session = ({minutes, seconds}) => {
     return(
-        <div className="flex flex-column ba"
+        <div className="w-40 w-30-ns w-30-m w-20-l flex flex-column items-center justify-cener ba br3 mt2 bg-lightest-blue"
             id="timer-label"
         >
             {
@@ -13,7 +13,7 @@ const Session = ({minutes, seconds}) => {
                 :
                 <h2>Break</h2>
             }
-            <div id="time-left">{minutes}:{seconds}</div>
+            <div id="time-left" className="pb2 f4">{minutes}:{seconds}</div>
             <audio
                 id="beep"
                 src={Pacman}

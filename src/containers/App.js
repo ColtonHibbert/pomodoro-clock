@@ -34,8 +34,6 @@ const mapDispatchToProps = (dispatch) => {
         updateDecreasedBreakLength: () => dispatch(updateDecreasedBreakLength()),
         updateIncreasedSessionLength: () => dispatch(updateIncreasedSessionLength()),
         updateDecreasedSessionLength: () => dispatch(updateDecreasedSessionLength()),
-        //countDown: () => dispatch(countDown()),
-        //togglePlay: () => dispatch(togglePlay()),
         play: () => {
             dispatch(togglePlay());
             dispatch(countDown());
@@ -52,9 +50,9 @@ class App extends React.Component {
     render() {
         return(
             <div
-                className="min-vh-100 flex flex-column items-center bg-green"
+                className="min-vh-100 flex flex-column items-center bg-light-green"
             >
-              <h1>Pomodoro Clock</h1>
+              <h1 className="pt4">Pomodoro Clock</h1>
               <div className="flex justify-center">
                 <BreakLength 
                 updateIncreasedBreakLength={this.props.updateIncreasedBreakLength}
