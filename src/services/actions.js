@@ -201,15 +201,16 @@ function runTiming(dispatch) {
     function countingDown() {
         if(store.getState().play) {
             if(store.getState().sessionMinutesArrayIndex === 0 && store.getState().sessionSecondsArrayIndex === 0) {
-                dispatch(alternateSessionAndBreak())
                 if(store.getState().session === false) {
                     dispatch(updateSessionMinutesArrayIndex(store.getState().breakLengthIndex + 1))
                     dispatch(updateSessionSecondsArrayIndex(60))
+                    dispatch(alternateSessionAndBreak())
                 }
                 else {
                     dispatch(updateSessionMinutesArrayIndex(store.getState().sessionLengthIndex + 1))
                     dispatch(updateSessionSecondsArrayIndex(60))
-                }
+                    dispatch(alternateSessionAndBreak())
+                 }
             }
             if (store.getState().sessionSecondsArrayIndex === 0) {
                 dispatch(updateSessionSecondsArrayIndex(60))
